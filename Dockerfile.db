@@ -1,7 +1,7 @@
 # Use the official PostgreSQL image from the Docker Hub
-FROM postgres:16
+FROM postgres:13
 
 # Set environment variables for PostgreSQL
-ENV POSTGRES_DB=insait_database
-ENV POSTGRES_USER=aliseh
-ENV POSTGRES_PASSWORD=aliseh
+ENV POSTGRES_DB=your_database
+ENV POSTGRES_USER=your_username
+ENV POSTGRES_PASSWORD=your_password
