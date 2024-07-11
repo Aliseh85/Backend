@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile.db
+    environment:
+      POSTGRES_DB: insait_database
+      POSTGRES_USER: aliseh
+      POSTGRES_PASSWORD: aliseh
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  web:
+    build: .
+    command: flask run --host=0.0.0.0
+    environment:
+      FLASK_ENV: development
+      DATABASE_URL: postgresql://aliseh:aliseh@db:5432/insait_database
+      OPENAI_API_KEY: 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
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+
+volumes:
+  pgdata:
