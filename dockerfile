@@ -1,11 +1,14 @@
 # Use an official Python runtime as a parent image
-FROM python:3.9-slim
+FROM python:3.9-slim as base
+
+# Install PostgreSQL client tools
+RUN apt-get update && apt-get install -y postgresql-client
 
 # Set the working directory in the container
-WORKDIR /app
+WORKDIR /insaitbackend
 
-# Copy the current directory contents into the container at /app
-COPY . /app
+# Copy the current directory contents into the container at /insaitbackend
+COPY . /insaitbackend
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
@@ -18,3 +21,15 @@ ENV FLASK_APP=app.py
 
 # Run app.py when the container launches
 CMD ["flask", "run", "--host=0.0.0.0"]
+
+# Test stage
+FROM base as test
+
+# Set the working directory for the test stage
+WORKDIR /insaitbackend
+
+# Copy only the necessary files from the base stage
+COPY --from=base /insaitbackend /insaitbackend
+
+# Run tests
+CMD ["pytest"]

@@ -4,7 +4,15 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
-from app import db  # Replace 'app' with the actual module or package name where your db object is defined
+import os
+import sys
+
+# This will add your application directory to Python's path
+sys.path.append(os.path.abspath(os.getcwd()))
+
+from app import db  # Adjust 'app' to match your actual module structure
+
+# rest of your Alembic env.py script ...
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

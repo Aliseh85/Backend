@@ -4,3 +4,6 @@ SQLAlchemy
 Flask-SQLAlchemy
 openai
 alembic
+pytest
+pytest-flask
+pytest-mock

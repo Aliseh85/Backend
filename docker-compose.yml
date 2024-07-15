@@ -1,19 +1,29 @@
-version: '3'
+version: '3.9'
+
 services:
   db:
     image: postgres:latest
     environment:
-      POSTGRES_USER: aliseh
-      POSTGRES_PASSWORD: aliseh
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ali
       POSTGRES_DB: insait_database
     ports:
       - "5432:5432"
-
+  
   web:
     build: .
     ports:
       - "5000:5000"
     environment:
-      SQLALCHEMY_DATABASE_URI: 'postgresql://ali:ali@db:5432/insait_database'
+      SQLALCHEMY_DATABASE_URI: 'postgresql://postgres:ali@localhost:5432/insait_database'
     depends_on:
       - db
+    command: ["flask", "run", "--host=0.0.0.0"]
+
+  test:
+    build: .
+    environment:
+      SQLALCHEMY_DATABASE_URI: 'postgresql://postgres:ali@localhost:5432/insait_database_test'
+    depends_on:
+      - db
+    command: ["pytest"]

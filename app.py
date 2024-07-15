@@ -6,10 +6,10 @@ import os
 app = Flask(__name__)
 
 # Set your OpenAI API key from environment variable
-openai.api_key = os.getenv('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')
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
 # Database configuration from environment variable
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://aliseh:aliseh@localhost:5432/insait_database'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:ali@localhost:5432/insait_database'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -30,11 +30,11 @@ def ask():
 
     try:
         response = openai.Completion.create(
-            engine="text-davinci-003",
+            model="text-davinci-003",  # Specify the model to use
             prompt=question_text,
             max_tokens=150
         )
-        answer_text = response.choices[0].text.strip()
+        answer_text = response['choices'][0]['text'].strip()
 
         # Save question and answer to the database
         question = Question(text=question_text, answer=answer_text)
