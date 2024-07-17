@@ -6,7 +6,7 @@ import os
 app = Flask(__name__)
 
 # Set your OpenAI API key from environment variable
-openai.api_key = os.getenv('OPENAI_API_KEY')# change the key here
+openai.api_key = os.getenv('API_KEY')# change the key here
 
 # Database configuration from environment variable
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:ali@localhost:5432/insait_database'
